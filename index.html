@@ -122,17 +122,18 @@
     max-width:1200px;margin:0 auto;padding:0 28px;
     height:74px;display:flex;align-items:center;justify-content:space-between;
   }
-  .nav-logo{display:flex;align-items:center;gap:10px;}
+  .nav-logo{display:flex;align-items:center;gap:10px;flex-shrink:0;}
   .nav-logo .mark{font-weight:800;font-size:20px;color:var(--navy);letter-spacing:-0.01em;}
   .nav-logo .mark span{color:var(--blue);}
   .nav-logo .tag{
     font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--gold);
     border-left:1px solid var(--line);padding-left:10px;text-transform:uppercase;
   }
-  .brand-logo{height:34px;width:auto;display:block;}
+  .brand-logo{height:34px;width:auto;display:block;flex-shrink:0;object-fit:contain;}
   .brand-logo.on-dark{filter:brightness(0) invert(1);opacity:.96;}
   .hero-logo{height:30px;width:auto;filter:brightness(0) invert(1);margin-bottom:28px;opacity:.95;}
   .footer-brand .brand-logo{height:32px;margin-bottom:4px;}
+  .footer-brand{flex-shrink:0;}
   .addr-line{
     display:flex;align-items:flex-start;gap:8px;margin-top:16px;font-size:13.5px;color:var(--gray);line-height:1.55;
   }
@@ -249,8 +250,9 @@
     border-radius:var(--radius);
     padding:28px 24px;
     transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s;
+    cursor:pointer;
   }
-  .modality-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:transparent;}
+  .modality-card:hover, .modality-card:focus-visible{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:transparent;outline:none;}
   .modality-card .icon-wrap{
     width:46px;height:46px;border-radius:11px;
     background:var(--navy);
@@ -260,6 +262,14 @@
   .modality-card .icon-wrap svg{width:22px;height:22px;}
   .modality-card h3{font-size:16.5px;font-weight:700;color:var(--navy);margin-bottom:8px;letter-spacing:.01em;}
   .modality-card p{font-size:14px;color:var(--gray);line-height:1.55;}
+  .modality-card .modality-cta{
+    display:inline-flex;align-items:center;gap:5px;margin-top:16px;
+    font-size:12.5px;font-weight:700;color:var(--blue);
+    opacity:0;transform:translateX(-4px);
+    transition:opacity .22s var(--ease), transform .22s var(--ease);
+  }
+  .modality-card .modality-cta svg{width:13px;height:13px;}
+  .modality-card:hover .modality-cta, .modality-card:focus-visible .modality-cta{opacity:1;transform:translateX(0);}
 
   /* ---------- Filter bar ---------- */
   .filter-bar{
@@ -334,14 +344,21 @@
   .course-card:hover::before{height:100%;}
   .course-card .course-area{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:9px;}
   .course-card h4{font-size:15.5px;font-weight:700;color:var(--navy);line-height:1.35;margin-bottom:16px;flex:1;}
-  .course-card .cta-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;}
+  .course-card .cta-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;}
+  .course-card .cta-row.dual{gap:8px;}
   .course-link{
     font-size:13px;font-weight:700;color:var(--navy);display:inline-flex;align-items:center;gap:6px;
     padding:9px 15px;border-radius:999px;background:var(--paper);
     transition:background .22s, color .22s, gap .22s;
+    flex:1;justify-content:center;white-space:nowrap;
   }
   .course-link:hover{background:var(--navy);color:var(--white);gap:9px;}
   .course-link svg{width:13px;height:13px;}
+  .cta-row.dual .course-link{font-size:12px;padding:9px 10px;}
+  .course-link.wa-link{background:rgba(62,157,215,0.12);color:var(--blue);}
+  .course-link.wa-link:hover{background:var(--blue);color:var(--white);}
+  .course-link.site-link{background:var(--navy);color:var(--white);}
+  .course-link.site-link:hover{background:var(--gold);color:var(--navy-deep);}
   .course-card.is-hidden{display:none;}
 
   .empty-state{
@@ -520,33 +537,37 @@
       <h2 class="section-title">Escolha como você quer estudar</h2>
     </div>
     <div class="modality-grid stagger">
-      <div class="modality-card reveal">
+      <div class="modality-card reveal" data-modality="presencial" role="button" tabindex="0">
         <div class="icon-wrap">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
         </div>
         <h3>Presencial</h3>
         <p>Encontros presenciais, networking e troca de experiências em sala.</p>
+        <span class="modality-cta">Ver cursos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </div>
-      <div class="modality-card reveal">
+      <div class="modality-card reveal" data-modality="semipresencial" role="button" tabindex="0">
         <div class="icon-wrap">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18M6 6l12 12M18 6L6 18"/></svg>
         </div>
         <h3>Semipresencial</h3>
         <p>Flexibilidade online com encontros presenciais ao longo do curso.</p>
+        <span class="modality-cta">Ver cursos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </div>
-      <div class="modality-card reveal">
+      <div class="modality-card reveal" data-modality="live" role="button" tabindex="0">
         <div class="icon-wrap">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3"/></svg>
         </div>
         <h3>Live</h3>
         <p>Aulas 100% ao vivo, com interação em tempo real.</p>
+        <span class="modality-cta">Ver cursos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </div>
-      <div class="modality-card reveal">
+      <div class="modality-card reveal" data-modality="online" role="button" tabindex="0">
         <div class="icon-wrap">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="1.5"/><path d="M8 21h8M12 17v4"/></svg>
         </div>
         <h3>Online</h3>
         <p>Estude de onde estiver, no seu ritmo.</p>
+        <span class="modality-cta">Ver cursos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </div>
     </div>
   </div>
@@ -873,54 +894,130 @@
 
   var registry = []; // {el, name, modality, location}
 
+  /* ---------------- Real course page URLs on edexlab.com.br ----------------
+     Confirmed by browsing the live site. Courses not listed here still use
+     the WhatsApp fallback until a real URL is provided. */
+  var RP_URLS = { // shared by Ribeirão Preto + São José do Rio Preto (presencial/semipresencial)
+    "MBA em Gestão Empresarial": "https://edexlab.com.br/mba-em-gestao-empresarial-3/",
+    "MBA em Gestão Comercial": "https://edexlab.com.br/mba-em-gestao-comercial/",
+    "MBA em Gestão Financeira": "https://edexlab.com.br/mba-em-gestao-financeira-controladoria-auditoria-e-compliance/",
+    "MBA em Gestão de Agronegócios": "https://edexlab.com.br/mba-executivo-economia-gestao-agronegocio/",
+    "MBA em Gestão de Comércio Exterior e Negócios Internacionais": "https://edexlab.com.br/mba-com-enfase-em-comercio-exterior-e-negocios-internacionais/",
+    "MBA em ESG": "https://edexlab.com.br/mba-com-enfase-em-esg/",
+    "MBA em Finanças, Controladoria e Auditoria": "https://edexlab.com.br/mba-em-gestao-financeira-controladoria-auditoria-e-compliance/",
+    "MBA em Gerenciamento de Projetos": "https://edexlab.com.br/mba-com-enfase-em-gerenciamento-de-projetos/",
+    "MBA em Gestão Estratégica de Marketing": "https://edexlab.com.br/mba-com-enfase-em-gestao-estrategica-de-marketing/",
+    "MBA em Gestão Industrial": "https://edexlab.com.br/mba-com-enfase-em-gestao-industrial/",
+    "MBA em Incorporação e Construção Imobiliária": "https://edexlab.com.br/mba-com-enfase-em-incorporacao-e-construcao-imobiliaria/",
+    "MBA em Inteligência Artificial": "https://edexlab.com.br/mba-com-enfase-em-inteligencia-artificial/",
+    "MBA em Logística e Supply Chain Management": "https://edexlab.com.br/mba-com-enfase-em-logistica-e-supply-chain-management/",
+    "MBA em Pessoas e Liderança": "https://edexlab.com.br/mba-em-lideranca-e-gestao-estrategica-de-pessoas/",
+    "MBA em Serviços de Saúde": "https://edexlab.com.br/mba-com-enfase-em-servicos-de-saude/"
+  };
+  var ONLINE_URLS = {
+    "MBA em Direito: Gestão e Business Law": "https://edexlab.com.br/mba-executivo-em-direito-gestao-e-business-law/",
+    "MBA em Gestão Empresarial": "https://edexlab.com.br/mba-executivo-gestao-empresarial/",
+    "MBA em Gestão Agronegócios": "https://edexlab.com.br/mba-executivo-gestao-com-enfase-em-agronegocios/",
+    "MBA em Gestão: Gerenciamento de Projetos": "https://edexlab.com.br/mba-executivo-enfase-gerenciamento-projetos/",
+    "MBA em Gestão: Gestão Comercial e Vendas": "https://edexlab.com.br/mba-executivo-enfase-gestao-comercial-e-vendas/",
+    "MBA em Gestão: Gestão Financeira": "https://edexlab.com.br/mba-executivo-gestao-enfase-gestao-financeira/",
+    "MBA em Gestão: Liderança e Inovação": "https://edexlab.com.br/mba-executivo-gestao-enfase-lideranca-e-inovacao/",
+    "MBA em Gestão: Logística e Supply Chain Management": "https://edexlab.com.br/mba-executivo-enfase-logistica-supply-chain/",
+    "MBA em Gestão: Marketing e Mídias Digitais": "https://edexlab.com.br/mba-executivo-enfase-marketing-midias-digitais/"
+  };
+  var POS_URLS = {
+    "Pós-Graduação em Administração de Empresas": "https://edexlab.com.br/pos-graduacao-em-administracao-de-empresas/",
+    "Pós-Graduação em Direito Empresarial": "https://edexlab.com.br/pos-graduacao-em-direito-empresarial/",
+    "Pós-Graduação em ESG e Sustentabilidade Corporativa": "https://edexlab.com.br/pos-graduacao-meio-ambiente-e-sustentabilidade/",
+    "Pós-Graduação em Gerenciamento de Projetos": "https://edexlab.com.br/pos-graduacao-em-gerenciamento-de-projetos/",
+    "Pós-Graduação em Gestão Comercial e Vendas": "https://edexlab.com.br/pos-graduacao-em-gestao-comercial-e-vendas/",
+    "Pós-Graduação em Gestão Financeira": "https://edexlab.com.br/pos-graduacao-em-gestao-financeira/",
+    "Pós-Graduação em Liderança e Inovação": "https://edexlab.com.br/pos-graduacao-em-lideranca-e-inovacao/",
+    "Pós-Graduação em Logística e Supply Chain Management": "https://edexlab.com.br/pos-graduacao-em-logistica-e-supply-chain/",
+    "Pós-Graduação em Marketing e Mídias Digitais": "https://edexlab.com.br/pos-graduacao-em-marketing-e-midias-digitais/"
+  };
+  var LIVE_URLS = {
+    "LL.M em Direito Empresarial": "https://edexlab.com.br/llm-direito-empresarial/",
+    "LL.M em Direito: Tributário": "https://edexlab.com.br/llm-direito-tributario/",
+    "MBA em Administração: Gestão da Tecnologia da Informação": "https://edexlab.com.br/mba-executivo-adm-gestao-tecnologia-informacao/",
+    "MBA em Inteligência Artificial e Analytics Aplicadas a Negócios": "https://edexlab.com.br/mba-em-inteligencia-artificial-e-analytics-aplicadas-a-negocios/",
+    "MBA em Administração: Gestão de Incorporações e Construções Imobiliárias": "https://edexlab.com.br/mba-adm-incorporacoes-construcoes-imobiliarias/",
+    "MBA em Gestão Estratégica e Econômica de Negócios": "https://edexlab.com.br/mba-executivo-gestao-estrategica-econ-negocios/",
+    "MBA em Gestão Empresarial": "https://edexlab.com.br/mba-em-gestao-empresarial-2/",
+    "MBA em Gestão Industrial": "https://edexlab.com.br/mba-executivo-em-gestao-industrial/",
+    "MBA em Gestão de Projetos": "https://edexlab.com.br/mba-gerenciamento-projetos/",
+    "MBA em Gestão de Comércio Exterior e Negócios Internacionais": "https://edexlab.com.br/mba-gestao-negocios-internacionais/",
+    "MBA em Bancos e Instituições Financeiras": "https://edexlab.com.br/mba-em-bancos-e-instituicoes-financeiras/",
+    "MBA em Finanças: Corporate Finance": "https://edexlab.com.br/mba-executivo-em-financas-corporate-finance/",
+    "MBA em Gestão Financeira: Controladoria, Auditoria e Compliance": "https://edexlab.com.br/mba-em-financas-controladoria-auditoria-e-compliance/",
+    "MBA em Gestão Estratégica de Pessoas: Desenvolvimento Humano de Gestores": "https://edexlab.com.br/mba-gestao-estrategica-pessoas-dh-gestores/",
+    "MBA em Economia e Gestão: Agronegócio": "https://edexlab.com.br/mba-executivo-economia-gestao-agronegocio/",
+    "MBA em ESG – Environmental, Social & Governance": "https://edexlab.com.br/mba-em-esg-environmental-social-governance/",
+    "MBA em Administração: Gestão de Saúde": "https://edexlab.com.br/mba-em-gestao-de-saude/",
+    "MBA em Administração: Negócios do Setor Elétrico": "https://edexlab.com.br/mba-executivo-adm-negocios-setor-eletrico/",
+    "MBA em Políticas Públicas e Gestão Governamental": "https://edexlab.com.br/mba-em-politicas-publicas-e-gestao-governamental/",
+    "MBA em Logística e Supply Chain Management": "https://edexlab.com.br/mba-em-logistica-e-supply-chain-management/"
+  };
+
   function svgIcon(name){
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+(ICONS[name]||ICONS.briefcase)+'</svg>';
   }
 
-  function makeCard(name, modality, location, msg){
+  function makeCard(name, modality, location, msg, siteUrl){
     var card = document.createElement('div');
     card.className = 'course-card reveal';
     var areaLabel = modality === 'pos' ? 'Pós-Graduação Online' :
                      modality === 'live' ? 'MBA Live' :
                      modality === 'online' ? 'MBA Online' :
                      modality === 'presencial' ? 'Presencial' : 'Semipresencial';
+    var arrowSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    var ctaHtml;
+    if (siteUrl) {
+      ctaHtml =
+        '<div class="cta-row dual">' +
+          '<a class="course-link wa-link" target="_blank" rel="noopener" href="'+waLink(msg)+'">Entrar em contato</a>' +
+          '<a class="course-link site-link" target="_blank" rel="noopener" href="'+siteUrl+'">Saiba mais '+arrowSvg+'</a>' +
+        '</div>';
+    } else {
+      ctaHtml =
+        '<div class="cta-row">' +
+          '<a class="course-link" target="_blank" rel="noopener" href="'+waLink(msg)+'">Quero saber mais '+arrowSvg+'</a>' +
+        '</div>';
+    }
     card.innerHTML =
       '<span class="course-area">'+areaLabel+'</span>' +
       '<h4>'+name+'</h4>' +
-      '<div class="cta-row">' +
-        '<a class="course-link" target="_blank" rel="noopener" href="'+waLink(msg)+'">Quero saber mais ' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' +
-        '</a>' +
-      '</div>';
+      ctaHtml;
     registry.push({ el: card, name: name.toLowerCase(), modality: modality, location: location||'' });
     return card;
   }
 
-  function renderGrid(containerId, names, modality, location, msgFn){
+  function renderGrid(containerId, names, modality, location, msgFn, urlMap){
     var container = document.getElementById(containerId);
     names.forEach(function(name){
-      container.appendChild(makeCard(name, modality, location, msgFn(name)));
+      var siteUrl = urlMap && urlMap[name];
+      container.appendChild(makeCard(name, modality, location, msgFn(name), siteUrl));
     });
   }
 
   renderGrid('rp-presencial', DATA.rpPresencial, 'presencial', 'ribeirao', function(n){
     return "Olá! Tenho interesse no "+n+" presencial em Ribeirão Preto. Gostaria de receber mais informações.";
-  });
+  }, RP_URLS);
   renderGrid('rp-semipresencial', DATA.rpSemipresencial, 'semipresencial', 'ribeirao', function(n){
     return "Olá! Tenho interesse no "+n+" semipresencial em Ribeirão Preto. Gostaria de conhecer as opções disponíveis.";
-  });
+  }, RP_URLS);
   renderGrid('sjrp-presencial', DATA.sjrpPresencial, 'presencial', 'sjrp', function(n){
     return "Olá! Tenho interesse no "+n+" presencial em São José do Rio Preto. Gostaria de receber mais informações.";
-  });
+  }, RP_URLS);
   renderGrid('sjrp-semipresencial', DATA.sjrpSemipresencial, 'semipresencial', 'sjrp', function(n){
     return "Olá! Tenho interesse no "+n+" semipresencial em São José do Rio Preto. Gostaria de conhecer as opções disponíveis.";
-  });
+  }, RP_URLS);
   renderGrid('mba-online-grid', DATA.mbaOnline, 'online', '', function(n){
     return "Olá! Tenho interesse no "+n+" (MBA Online). Gostaria de receber mais informações.";
-  });
+  }, ONLINE_URLS);
   renderGrid('pos-online-grid', DATA.posOnline, 'pos', '', function(n){
     return "Olá! Tenho interesse na "+n+" (Pós-Graduação Online). Gostaria de receber mais informações.";
-  });
+  }, POS_URLS);
 
   /* ---------------- Live accordion ---------------- */
   var accWrap = document.getElementById('liveAccordion');
@@ -940,7 +1037,7 @@
 
     var grid = item.querySelector('#'+panelId+'-grid');
     group.items.forEach(function(name){
-      grid.appendChild(makeCard(name, 'live', '', "Olá! Tenho interesse no "+name+" (MBA Live). Gostaria de receber mais informações."));
+      grid.appendChild(makeCard(name, 'live', '', "Olá! Tenho interesse no "+name+" (MBA Live). Gostaria de receber mais informações.", LIVE_URLS[name]));
     });
 
     var trigger = item.querySelector('.acc-trigger');
@@ -1025,6 +1122,27 @@
     modalityFilter.value = '';
     locationFilter.value = '';
     applyFilters();
+  });
+
+  /* ---------------- Modality cards: click -> filter + scroll ---------------- */
+  var MODALITY_TARGET = {
+    presencial: '#ribeirao-preto',
+    semipresencial: '#ribeirao-preto',
+    live: '#mba-live',
+    online: '#mba-online'
+  };
+  document.querySelectorAll('.modality-card[data-modality]').forEach(function(card){
+    function activate(){
+      var mod = card.getAttribute('data-modality');
+      modalityFilter.value = mod;
+      applyFilters();
+      var target = document.querySelector(MODALITY_TARGET[mod] || '#cursos');
+      if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    card.addEventListener('click', activate);
+    card.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); activate(); }
+    });
   });
 
   /* ---------------- Navbar shadow on scroll ---------------- */
