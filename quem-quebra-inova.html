@@ -704,9 +704,21 @@ h1,h2,h3,h4,p{margin:0;}
 .impact-line{
   font-size:clamp(26px,4.4vw,48px); font-weight:800; line-height:1.15;
   letter-spacing:-.01em; margin-top:64px; max-width:820px;
+  position:relative;
+  padding:38px 36px 34px 40px;
+  border-left:4px solid var(--gold);
 }
-.impact-navy{color:var(--navy);}
-.impact-white{color:var(--white);}
+.impact-line::before{
+  content:'\201C';
+  position:absolute; top:-30px; left:-4px;
+  font-size:4.2em; font-weight:800; line-height:1;
+  font-family:Georgia, 'Times New Roman', serif;
+  color:var(--gold); opacity:.35;
+  pointer-events:none;
+}
+.impact-navy{color:var(--navy); background:rgba(9,33,77,.045);}
+.impact-white{color:var(--white); background:rgba(255,255,255,.08); border-left-color:var(--cyan);}
+.impact-white::before{color:var(--cyan);}
 
 .sec-provocacao{
   background:linear-gradient(160deg, var(--blue-deep) 0%, var(--navy) 55%, var(--blue-art) 100%);
